@@ -1,0 +1,20 @@
+services:
+  rabbit_producer:
+    image: rabbit_producer
+    container_name: rabbit_producer
+    build:
+      context: .
+      dockerfile: ./rabbit_producer/Dockerfile
+    ports:
+      - "8080:80"
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbit
+    hostname: "rabbit"
+    environment:
+      - "RABBITMQ_DEFAULT_USER=kuba"
+      - "RABBITMQ_DEFAULT_PASS=bardzotajnehaslo"
+    ports:
+      - "15672:15672"
+      - "5672:5672"

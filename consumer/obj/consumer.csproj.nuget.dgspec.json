@@ -1,0 +1,76 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/jakub/Projects/praktyki/parcelwave/consumer/consumer.csproj": {}
+  },
+  "projects": {
+    "/Users/jakub/Projects/praktyki/parcelwave/consumer/consumer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/jakub/Projects/praktyki/parcelwave/consumer/consumer.csproj",
+        "projectName": "consumer",
+        "projectPath": "/Users/jakub/Projects/praktyki/parcelwave/consumer/consumer.csproj",
+        "packagesPath": "/Users/jakub/.nuget/packages/",
+        "outputPath": "/Users/jakub/Projects/praktyki/parcelwave/consumer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/jakub/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.25.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[7.0.0-alpha.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.311/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

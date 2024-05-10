@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "LAKO5OqrK0vDIuv52RvfHLTV2nVbyD/rw9AG8QqrtlfzEbLVbfaR8y4D7T/RpCbpJi7ISpDPP5q4PPMFtAm1yg==",
+  "success": true,
+  "projectFilePath": "/Users/jakub/Projects/praktyki/parcelwave/rabbit_producer/rabbit_producer.csproj",
+  "expectedPackageFiles": [
+    "/Users/jakub/.nuget/packages/microsoft.aspnetcore.openapi/7.0.14/microsoft.aspnetcore.openapi.7.0.14.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/rabbitmq.client/7.0.0-alpha.5/rabbitmq.client.7.0.0-alpha.5.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/system.io.pipelines/7.0.0/system.io.pipelines.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
