@@ -1,35 +1,21 @@
 using System.Text;
 using Newtonsoft.Json;
 using rabbit_producer.Models;
-using rabbit_producer.Repositories.Interfaces;
+using rabbit_producer.QueueSender.Interfaces;
 using RabbitMQ.Client;
 
-namespace rabbit_producer.Repositories;
+namespace rabbit_producer.QueueSender;
 
-public class ParcelRepository : IParcelRepository
+public class QueueSender : IQueueSender
 {
-    public async Task<bool> Parcel_Weight(ParcelEnity parcel)
-    {
-        return await SendToQueue(parcel);
-    }    
-    public async Task<bool> Parcel_Scanner(ParcelEnity parcel)
-    {
-        return await SendToQueue(parcel);
-    }    
-    
-    public async Task<bool> Parcel_Facility(ParcelEnity parcel)
-    {        
-        return await SendToQueue(parcel);
-    }
-    
-    private async Task<bool> SendToQueue(ParcelEnity parcel)
+    public async Task<bool> SendToQueue(ParcelEnity parcel)
     {
         try
         {
-            var factory = new ConnectionFactory { HostName = "rabbit",
+            var factory = new ConnectionFactory { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME") ?? "localhost",
                 DispatchConsumersAsync = true,
-                UserName = "kuba",
-                Password = "bardzotajnehaslo"
+                UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER"),
+                Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")
             };
             using var connection =await factory.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();

@@ -1,6 +1,6 @@
 using rabbit_producer.Models;
 using rabbit_producer.Models.Dto;
-using rabbit_producer.Repositories.Interfaces;
+using rabbit_producer.QueueSender.Interfaces;
 using rabbit_producer.Services.Interfaces;
 
 namespace rabbit_producer.Services;
@@ -8,11 +8,11 @@ namespace rabbit_producer.Services;
 public class ParcelService : IParcelService
 {
     
-    private readonly IParcelRepository _parcelRepository;
+    private readonly IQueueSender _queueSender;
 
-    public ParcelService(IParcelRepository parcelRepository)
+    public ParcelService(IQueueSender queueSender)
     {
-        _parcelRepository = parcelRepository;
+        _queueSender = queueSender;
     }
     
     public async Task<bool> Parcel_Weight(ParcelWeightDTO dto)
@@ -29,7 +29,7 @@ public class ParcelService : IParcelService
             }
         };
         
-        return await _parcelRepository.Parcel_Weight(parcel);
+        return await _queueSender.SendToQueue(parcel);
     }
     
     public async Task<bool> Parcel_Scanner(ParcelScannerDTO dto)
@@ -48,7 +48,7 @@ public class ParcelService : IParcelService
             }
         };
         
-        return await _parcelRepository.Parcel_Scanner(parcel);
+        return await _queueSender.SendToQueue(parcel);
     }
     
     public async Task<bool> Parcel_Facility(ParcelFacilityDTO dto)
@@ -65,6 +65,6 @@ public class ParcelService : IParcelService
             }
         };
             
-        return await _parcelRepository.Parcel_Facility(parcel);
+        return await _queueSender.SendToQueue(parcel);
     }
 }

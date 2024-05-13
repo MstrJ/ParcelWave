@@ -1,5 +1,5 @@
-using rabbit_producer.Repositories;
-using rabbit_producer.Repositories.Interfaces;
+using rabbit_producer.QueueSender;
+using rabbit_producer.QueueSender.Interfaces;
 using rabbit_producer.Services;
 using rabbit_producer.Services.Interfaces;
 
@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
     
-builder.Services.AddTransient<IParcelRepository, ParcelRepository>();
+builder.Services.AddTransient<IQueueSender, QueueSender>();
 builder.Services.AddTransient<IParcelService, ParcelService>();
 
 var app = builder.Build();

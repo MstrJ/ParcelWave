@@ -7,14 +7,32 @@ services:
       dockerfile: ./rabbit_producer/Dockerfile
     ports:
       - "8080:80"
+    env_file:
+      - .env
+
+  consumer:
+    image: consumer
+    container_name: consumer
+    build:
+      context: .
+      dockerfile: ./consumer/Dockerfile
+    env_file:
+      - .env
 
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: rabbit
     hostname: "rabbit"
-    environment:
-      - "RABBITMQ_DEFAULT_USER=kuba"
-      - "RABBITMQ_DEFAULT_PASS=bardzotajnehaslo"
+    env_file:
+      - .env
     ports:
       - "15672:15672"
       - "5672:5672"
+
+  mongo:
+    image: "mongo:latest"
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo:/data/db

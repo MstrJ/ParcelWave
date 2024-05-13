@@ -11,7 +11,7 @@ public class ParcelEnity
 public class Identifies
 {
     public string UPID { get; set; }
-    public string Barcode { get; set; }
+    public string? Barcode { get; set; }
 }
 
 public class Attributes
