@@ -3,7 +3,6 @@ class Program
 {
     public static async Task Main()
     {
-
         while (true)
         {
             await RabbitConsumerService.ConsumeParcel();

@@ -5,6 +5,8 @@
 
 .env
 mongo/
+
+.DS_Store
 # User-specific files
 *.rsuser
 *.suo
@@ -399,5 +401,3 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-
-.DS_Store

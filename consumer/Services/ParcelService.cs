@@ -1,3 +1,4 @@
+using consumer.Enums;
 using consumer.Models;
 using consumer.Repositories.Interfaces;
 
@@ -12,10 +13,8 @@ public class ParcelService : IParcelService
     {
         _parcelRepository = parcelRepository;
     }
-
-
-
-    public async Task<bool> ParcelCreate(ParcelEntity parcel)
+    
+    public async Task<ParcelCreateEnum> ParcelCreate(ParcelEntity parcel)
     {
         try
         {
@@ -35,7 +34,7 @@ public class ParcelService : IParcelService
                 };
 
                 await _parcelRepository.ParcelAdd(obj);
-                return true;
+                return ParcelCreateEnum.ParcelIsCreated;
             }
             
             if (parcel.Attributes != null)
@@ -50,15 +49,20 @@ public class ParcelService : IParcelService
             {
                 existingParcel.CurrentState.Facility = parcel.CurrentState.Facility ?? existingParcel.CurrentState.Facility;
             }
+            
+            var parcelFromDb = await _parcelRepository.ParcelGet(existingParcel.Identifies.UPID);
+            
+            if(existingParcel.Equals(parcelFromDb)) return ParcelCreateEnum.ParcelIsNotChanged;
+                
 
             await _parcelRepository.ParcelUpdate(existingParcel);
-            return true;
+            return ParcelCreateEnum.ParcelIsUpdated;
                 
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            return false;
+            return ParcelCreateEnum.ParcelIsNotCreated;
         }
     }
     

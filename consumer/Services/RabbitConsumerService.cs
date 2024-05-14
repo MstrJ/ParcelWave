@@ -1,5 +1,7 @@
 using System.Text;
+using consumer.Enums;
 using consumer.Models;
+using consumer.Models.Interfaces;
 using consumer.Repositories;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -9,8 +11,8 @@ namespace consumer.Services;
 
 public static class RabbitConsumerService
 {
-    private static readonly IParcelService _parcelService = new ParcelService(new ParcelRepository());
-        
+    private static readonly IParcelService _parcelService = Factory.Factory.CreateParcelService();
+    private static readonly IKafkaProducerService _kafkaProducerService = Factory.Factory.CreateKafkaProducerService();
     
     public static async Task ConsumeParcel()
     {
@@ -22,8 +24,8 @@ public static class RabbitConsumerService
             {
                 HostName =hostname,
                 Port= hostname == "localhost" ? 5672 : -1,
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? "",
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? "",
+                UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? "kuba",
+                Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? "bardzotajnehaslo",
             };
             
             using var connection = await factory.CreateConnectionAsync();
@@ -51,18 +53,31 @@ public static class RabbitConsumerService
                     // ...
                         
                     
-                    var r = await _parcelService.ParcelCreate(json);
+                    var r_create = await _parcelService.ParcelCreate(json);
 
-                    if(!r) Console.WriteLine("Parcel is not created");
-                        
-                    var parcel = await _parcelService.ParcelGet(json.Identifies.UPID);
-                    
-                    
-                    if (parcel.IsReady())
+                    switch (r_create)
                     {
-                        Console.WriteLine($"Parcel is ready to be shipped, upid: {parcel.Identifies.UPID}");
-                        // kafka
+                        case ParcelCreateEnum.ParcelIsCreated:
+                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is created");
+
+                            await Fee(json);
+                            break;
+                        case ParcelCreateEnum.ParcelIsUpdated:
+                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is updated");
+
+                            await Fee(json);
+                            break;
+                        case ParcelCreateEnum.ParcelIsNotChanged:
+                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] wasn't changed");
+                            break;
+                        case ParcelCreateEnum.ParcelIsNotCreated:
+                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is not created");
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
+
+   
                 };
 
                 await channel.BasicConsumeAsync(queue: "parcels",
@@ -75,9 +90,33 @@ public static class RabbitConsumerService
         }
         catch (Exception e)
         {
-              // Console.WriteLine(e);
               Console.WriteLine("Error connecting to rabbitmq server. Retrying in 5 seconds");
         }
 
-    } 
+    }
+
+
+    private static async Task Fee(IParcelEntity json)
+    {
+        var parcel = await _parcelService.ParcelGet(json.Identifies.UPID);
+
+        if (!parcel.IsReady()) return;
+        
+        Console.WriteLine($" Parcel [{parcel.Identifies.UPID}] is ready to be shipped! 🚀");
+            
+        var r_produce = await _kafkaProducerService.ProduceParcel(parcel);
+            
+        Console.ResetColor();
+        if(r_produce) 
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"  Parcel [{parcel.Identifies.UPID}] has been successfully produced to Kafka! 🎉");
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"  Parcel [{parcel.Identifies.UPID}] could not be produced to Kafka. 😞");
+        }
+        Console.ResetColor();
+    }
 }
