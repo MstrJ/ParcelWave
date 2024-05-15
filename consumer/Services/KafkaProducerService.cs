@@ -2,38 +2,45 @@ using com.kuba;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Confluent.SchemaRegistry.Serdes;
+using Microsoft.Extensions.Configuration;
 using ParcelEntity = consumer.Models.ParcelEntity;
+using ParcelScheme = com.kuba.ParcelEntity;
 
 namespace consumer.Services;
 
 public class KafkaProducerService : IKafkaProducerService
 {
-    private readonly ProducerConfig _producerConfig = new()
+    private readonly IConfiguration _config;
+    public KafkaProducerService(IConfiguration config)
     {
-        BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_HOSTNAME") ?? "localhost:9094",
-    };
-    
-    private readonly SchemaRegistryConfig _schemaRegistryConfig = new()
-    {
-        Url = Environment.GetEnvironmentVariable("SCHEMA_REGISTRY_URL") ?? "http://localhost:8085",
-    };
-    
-    private readonly AvroSerializerConfig _avroSerializerConfig = new()
-    {
-        BufferBytes = 100
-    };
-
+        _config = config;
+    }
         
     public async Task<bool> ProduceParcel(ParcelEntity parcel)
     {
+        var config = new ProducerConfig
+        {
+            BootstrapServers = _config["KafkaHostname"]
+        };
+        var schema = new SchemaRegistryConfig
+        {
+            Url = _config["SchemaRegistryUrl"]
+        };
+        
+        var avroSerializerConfig = new AvroSerializerConfig
+        {
+            BufferBytes = 100
+        };
+            
+        
         try
         {
-            using var schemaRegistry = new CachedSchemaRegistryClient(_schemaRegistryConfig);
-            using var producer = new ProducerBuilder<string, com.kuba.ParcelEntity>( _producerConfig)
-                .SetValueSerializer(new AvroSerializer<com.kuba.ParcelEntity>(schemaRegistry, _avroSerializerConfig))
+            using var schemaRegistry = new CachedSchemaRegistryClient(schema);
+            using var producer = new ProducerBuilder<string, ParcelScheme>(config)
+                .SetValueSerializer(new AvroSerializer<ParcelScheme>(schemaRegistry, avroSerializerConfig))
                 .Build();
 
-            var parcelToProduce = new com.kuba.ParcelEntity
+            var parcelToProduce = new ParcelScheme
             {
                 _Id = parcel._Id,
                 Identifies = new Identifies

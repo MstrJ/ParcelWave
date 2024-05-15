@@ -1,31 +1,43 @@
 using System.Text;
-using consumer.Enums;
 using consumer.Models;
 using consumer.Models.Interfaces;
-using consumer.Repositories;
+using consumer.Validators;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Serilog;
 
 namespace consumer.Services;
 
-public static class RabbitConsumerService
+public class RabbitConsumerService : IRabbitConsumerService
 {
-    private static readonly IParcelService _parcelService = Factory.Factory.CreateParcelService();
-    private static readonly IKafkaProducerService _kafkaProducerService = Factory.Factory.CreateKafkaProducerService();
+    private readonly IParcelService _parcelService;
+    private readonly IKafkaProducerService _kafkaProducerService;
+    private readonly ScannerStepValidator _scannerStepValidator;
+    private readonly ILogger _logger;
+    private readonly IConfiguration _config;
+
+    public RabbitConsumerService(IParcelService parcelService, IKafkaProducerService kafkaProducerService, ScannerStepValidator scannerStepValidator, ILogger logger, IConfiguration config)
+    {
+        (_parcelService, _kafkaProducerService, _scannerStepValidator,_logger,_config) =
+            (parcelService, kafkaProducerService, scannerStepValidator,logger,config);
+    }
     
-    public static async Task ConsumeParcel()
+    public async Task ConsumeParcel()
     {
         try
         {
-            Console.WriteLine("Consumer is running");
-            var hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME") ?? "localhost";
+            _logger.Information("Consumer is running");
+            var hostname = _config["RabbitMqHostname"];
+            
             var factory = new ConnectionFactory
             {
                 HostName =hostname,
                 Port= hostname == "localhost" ? 5672 : -1,
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER") ?? "kuba",
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS") ?? "bardzotajnehaslo",
+                UserName = _config["RabbitMqUsername"],
+                Password = _config["RabbitMqPassword"]
             };
             
             using var connection = await factory.CreateConnectionAsync();
@@ -36,8 +48,8 @@ public static class RabbitConsumerService
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
-            
-            Console.WriteLine(" [*] Waiting for messages.");
+                
+             _logger.Information("[*] Waiting for messages.");
             while (true)
             {
                 var consumer = new EventingBasicConsumer(channel);
@@ -45,38 +57,34 @@ public static class RabbitConsumerService
                 consumer.Received += async (model, ea) =>
                 {
                     var body = ea.Body.ToArray();
-                    var message = Encoding.UTF8.GetString(body);
+                    var json = Encoding.UTF8.GetString(body);
                     
+                    var parcel = JsonConvert.DeserializeObject<ParcelEntity>(json);
                     
-                    var json = JsonConvert.DeserializeObject<ParcelEntity>(message);
-                    // walidacja
-                    // ...
-                        
+                    _logger.Information("Received Parcel \n{@parcel}",parcel);
                     
-                    var r_create = await _parcelService.ParcelCreate(json);
-
-                    switch (r_create)
+                    // validation
+                    if(parcel?.Attributes != null && parcel.Attributes.ToJson().Length > 0)
                     {
-                        case ParcelCreateEnum.ParcelIsCreated:
-                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is created");
+                        var r =  await _scannerStepValidator.ValidateAsync(parcel.Attributes);
+                            
+                        if (!r.IsValid)
+                        {
+                            foreach (var failure in r.Errors)
+                            {
+                                _logger.Error("Property {@propertyName} failed validation. Error was: {@errorMessage}",failure.PropertyName,failure.ErrorMessage);
+                            }
 
-                            await Fee(json);
-                            break;
-                        case ParcelCreateEnum.ParcelIsUpdated:
-                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is updated");
-
-                            await Fee(json);
-                            break;
-                        case ParcelCreateEnum.ParcelIsNotChanged:
-                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] wasn't changed");
-                            break;
-                        case ParcelCreateEnum.ParcelIsNotCreated:
-                            Console.WriteLine($"Parcel [{json.Identifies.UPID}] is not created");
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                            return;
+                        }
                     }
 
+                    //creating parcel
+                    var result = await _parcelService.Create(parcel);
+                    
+                    
+                     //check and produce to kafka
+                    if (result) await CheckKafkaProduceParcel(parcel); //  Foo
    
                 };
 
@@ -90,33 +98,26 @@ public static class RabbitConsumerService
         }
         catch (Exception e)
         {
-              Console.WriteLine("Error connecting to rabbitmq server. Retrying in 5 seconds");
+               _logger.Error("Error connecting to rabbitmq server. Retrying in 5 seconds");
         }
-
     }
 
 
-    private static async Task Fee(IParcelEntity json)
+    private  async Task CheckKafkaProduceParcel(IParcelEntity parcelEntity)
     {
-        var parcel = await _parcelService.ParcelGet(json.Identifies.UPID);
+        var parcel = await _parcelService.Get(parcelEntity.Identifies.UPID);
 
         if (!parcel.IsReady()) return;
         
-        Console.WriteLine($" Parcel [{parcel.Identifies.UPID}] is ready to be shipped! 🚀");
+         _logger.Information("Parcel [{@parcel}] is ready to be shipped! 🚀",parcel.Identifies.UPID);
+             
+        var result = await _kafkaProducerService.ProduceParcel(parcel);
             
-        var r_produce = await _kafkaProducerService.ProduceParcel(parcel);
-            
-        Console.ResetColor();
-        if(r_produce) 
+        if(result) 
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"  Parcel [{parcel.Identifies.UPID}] has been successfully produced to Kafka! 🎉");
+             _logger.Information("Parcel [{@parcel}] has been successfully produced to Kafka! 🎉",parcel.Identifies.UPID);
+            return;
         }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"  Parcel [{parcel.Identifies.UPID}] could not be produced to Kafka. 😞");
-        }
-        Console.ResetColor();
+        _logger.Error("Parcel [{@parcel}] could not be produced to Kafka. 😞",parcel.Identifies.UPID);
     }
 }

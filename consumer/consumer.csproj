@@ -11,9 +11,27 @@
     <ItemGroup>
       <PackageReference Include="Confluent.Kafka" Version="2.4.0" />
       <PackageReference Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.4.0" />
+      <PackageReference Include="FluentValidation" Version="11.9.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
       <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
       <PackageReference Include="RabbitMQ.Client" Version="7.0.0-alpha.5" />
+      <PackageReference Include="Serilog" Version="4.0.0-dev-02167" />
+      <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="5.1.0-dev-00943" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.Docker.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="appsettings.Development.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

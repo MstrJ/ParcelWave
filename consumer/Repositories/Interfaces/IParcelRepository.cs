@@ -4,8 +4,8 @@ namespace consumer.Repositories.Interfaces;
 
 public interface IParcelRepository
 {
-    Task<bool> ParcelAdd(ParcelEntity parcel);
-    Task<ParcelEntity> ParcelGet(string upid);
-    Task<bool> ParcelUpdate(ParcelEntity parcel);
-    Task<bool> ParcelDelete(string upid);
+    Task<bool> Add(ParcelEntity parcel);
+    Task<ParcelEntity> Get(string upid);
+    Task<bool> Update(ParcelEntity parcel);
+    Task<bool> Delete(string upid);
 }

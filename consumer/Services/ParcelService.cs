@@ -1,6 +1,6 @@
-using consumer.Enums;
 using consumer.Models;
 using consumer.Repositories.Interfaces;
+using Serilog;
 
 namespace consumer.Services;
 
@@ -8,17 +8,20 @@ public class ParcelService : IParcelService
 {
 
     private readonly IParcelRepository _parcelRepository;
-
-    public ParcelService(IParcelRepository parcelRepository)
+    private readonly ILogger _logger;
+    
+    public ParcelService(IParcelRepository parcelRepository,ILogger logger)
     {
         _parcelRepository = parcelRepository;
+        _logger = logger;
     }
     
-    public async Task<ParcelCreateEnum> ParcelCreate(ParcelEntity parcel)
+
+    public async Task<bool> Create(ParcelEntity parcel)
     {
         try
         {
-            var existingParcel = await _parcelRepository.ParcelGet(parcel.Identifies?.UPID!);
+            var existingParcel = await _parcelRepository.Get(parcel.Identifies?.UPID!);
 
             if (existingParcel == null)
             {
@@ -32,9 +35,8 @@ public class ParcelService : IParcelService
                     Attributes = parcel.Attributes ?? new Attributes(),
                     CurrentState = parcel.CurrentState ?? new CurrentState()
                 };
-
-                await _parcelRepository.ParcelAdd(obj);
-                return ParcelCreateEnum.ParcelIsCreated;
+                
+                return await _parcelRepository.Add(obj);
             }
             
             if (parcel.Attributes != null)
@@ -50,27 +52,29 @@ public class ParcelService : IParcelService
                 existingParcel.CurrentState.Facility = parcel.CurrentState.Facility ?? existingParcel.CurrentState.Facility;
             }
             
-            var parcelFromDb = await _parcelRepository.ParcelGet(existingParcel.Identifies.UPID);
-            
-            if(existingParcel.Equals(parcelFromDb)) return ParcelCreateEnum.ParcelIsNotChanged;
-                
+            var parcelFromDb = await _parcelRepository.Get(existingParcel.Identifies.UPID);
 
-            await _parcelRepository.ParcelUpdate(existingParcel);
-            return ParcelCreateEnum.ParcelIsUpdated;
+            if (existingParcel.Equals(parcelFromDb))
+            {
+                _logger.Information("Parcel [{@parcel}] wasn't changed",parcel.Identifies.UPID);
+                return false;
+            }
                 
+            await _parcelRepository.Update(existingParcel);
+            
+            return true;
+
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            return ParcelCreateEnum.ParcelIsNotCreated;
+            _logger.Information("Parcel [{@parcel}] is not created",parcel.Identifies.UPID);
+            return false;
         }
     }
     
-    
-    public async Task<ParcelEntity> ParcelGet(string upid)
+    public async Task<ParcelEntity> Get(string upid)
     {
-        return await _parcelRepository.ParcelGet(upid);
+        return await _parcelRepository.Get(upid);
     }
-
-
+    
 }
