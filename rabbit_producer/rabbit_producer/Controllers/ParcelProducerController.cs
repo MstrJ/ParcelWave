@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using rabbit_producer.Models.Dto;
 using rabbit_producer.Services.Interfaces;
+using rabbit_producer.Validations;
 
 namespace rabbit_producer.Controllers;
 
@@ -10,32 +11,47 @@ public class ParcelProducerController : ControllerBase
 {
 
     private readonly IParcelService _parcelService;
-    public ParcelProducerController(IParcelService parcelService)
+    private readonly ParcelFacilityValidation _parcelFacilityValidation;
+    private readonly ParcelScannerValidation _parcelScannerValidation;
+    private readonly ParcelWeightValidation _parcelWeightValidation;
+    public ParcelProducerController(IParcelService parcelService, ParcelFacilityValidation parcelFacilityValidation, ParcelScannerValidation parcelScannerValidation,ParcelWeightValidation parcelWeightValidation)
     {
         _parcelService = parcelService;
+        _parcelFacilityValidation = parcelFacilityValidation;
+        _parcelScannerValidation = parcelScannerValidation;
+        _parcelWeightValidation = parcelWeightValidation;
     }
     
-    [HttpPost("weight")]
-    public async Task<IActionResult> Parcel_Weight(ParcelWeightDTO dto)
+    [HttpPost("SendWithWeight")]
+    public async Task<IActionResult> SendWithWeight(ParcelWeightDTO dto)
     {
-        var r = await _parcelService.Parcel_Weight(dto);
-        if(r) return Ok("Step Parcel weight sent to queue");
-        return BadRequest("Step Parcel weight not sent to queue");
+        var validationResult = await _parcelWeightValidation.ValidateAsync(dto);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        
+        var r = await _parcelService.SendMessage(dto);
+        if(r) return Ok("Parcel's weight sent to the queue");
+        return BadRequest("Parcel's weight not sent to the queue");
     }
     
-    [HttpPost("scanner")]
-    public async Task<IActionResult> Parcel_Scanner(ParcelScannerDTO dto)
+    [HttpPost("SendWithScannersValues")]
+    public async Task<IActionResult> SendWithScannersValues(ParcelScannerDTO dto)
     {
-        var r = await _parcelService.Parcel_Scanner(dto);
-        if(r) return Ok("Step Parcel scanner sent to queue");
-        return BadRequest("StepParcel scanner not sent to queue");
+        var validationResult = await _parcelScannerValidation.ValidateAsync(dto);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        
+        var r = await _parcelService.SendMessage(dto);
+        if(r) return Ok("Scanner's values sent to the queue");
+        return BadRequest("Scanner's values is not sent to the queue");
     }
     
-    [HttpPost("facility")]
-    public async Task<IActionResult> Parcel_Facility(ParcelFacilityDTO dto)
+    [HttpPost("SendCurrentState")]
+    public async Task<IActionResult> SendCurrentState(ParcelFacilityDTO dto)
     {
-        var r = await _parcelService.Parcel_Facility(dto);
-        if(r) return Ok("StepParcel facility sent to queue");
-        return BadRequest("Step Parcel facility not sent to queue");
+        var validationResult = await _parcelFacilityValidation.ValidateAsync(dto);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
+        
+        var r = await _parcelService.SendMessage(dto);
+        if(r) return Ok("Current State sent to the queue");
+        return BadRequest("Current State not sent to the queue");
     }
 }

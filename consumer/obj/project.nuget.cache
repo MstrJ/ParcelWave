@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7KOfvLJY5LSznY16jZu/wcnhMJWCkDLRp6JVyvoiYhiWiSv5HnULSjhjhYvxWzWE2oNiiC8h/gxfjU7Dga974A==",
+  "dgSpecHash": "4Cpi/ZOL9tvJPI6QtsJlvSTzmnevSgmGUbV6NbECNcd+pmgdB02Uz95B2ldeDBIXuWpBaB+nCA999rCZa+mpaA==",
   "success": true,
   "projectFilePath": "/Users/jakub/Projects/praktyki/parcelwave/consumer/consumer.csproj",
   "expectedPackageFiles": [
@@ -23,6 +23,7 @@
     "/Users/jakub/.nuget/packages/microsoft.extensions.configuration.usersecrets/8.0.0/microsoft.extensions.configuration.usersecrets.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/microsoft.extensions.dependencymodel/8.0.0/microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/microsoft.extensions.diagnostics/8.0.0/microsoft.extensions.diagnostics.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/microsoft.extensions.diagnostics.abstractions/8.0.0/microsoft.extensions.diagnostics.abstractions.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/microsoft.extensions.fileproviders.abstractions/8.0.0/microsoft.extensions.fileproviders.abstractions.8.0.0.nupkg.sha512",
@@ -67,7 +68,11 @@
     "/Users/jakub/.nuget/packages/serilog/4.0.0-dev-02167/serilog.4.0.0-dev-02167.nupkg.sha512",
     "/Users/jakub/.nuget/packages/serilog.extensions.hosting/8.0.0/serilog.extensions.hosting.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/serilog.extensions.logging/8.0.0/serilog.extensions.logging.8.0.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/serilog.settings.configuration/8.0.0/serilog.settings.configuration.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/serilog.sinks.console/5.1.0-dev-00943/serilog.sinks.console.5.1.0-dev-00943.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/serilog.sinks.file/5.0.0/serilog.sinks.file.5.0.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/serilog.sinks.periodicbatching/4.1.0/serilog.sinks.periodicbatching.4.1.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/serilog.sinks.seq/7.0.1/serilog.sinks.seq.7.0.1.nupkg.sha512",
     "/Users/jakub/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
     "/Users/jakub/.nuget/packages/snappier/1.0.0/snappier.1.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/system.buffers/4.5.1/system.buffers.4.5.1.nupkg.sha512",
@@ -115,6 +120,7 @@
     "/Users/jakub/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
+    "/Users/jakub/.nuget/packages/system.threading.channels/8.0.0/system.threading.channels.8.0.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/jakub/.nuget/packages/zstdsharp.port/0.7.3/zstdsharp.port.0.7.3.nupkg.sha512"
   ],

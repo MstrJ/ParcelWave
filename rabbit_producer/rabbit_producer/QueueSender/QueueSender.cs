@@ -8,14 +8,21 @@ namespace rabbit_producer.QueueSender;
 
 public class QueueSender : IQueueSender
 {
-    public async Task<bool> SendToQueue(ParcelEnity parcel)
+    private readonly IConfiguration _configuration;
+
+    public QueueSender(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+    public async Task<bool> SendToQueue(ParcelMessage parcel)
     {
         try
         {
-            var factory = new ConnectionFactory { HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOSTNAME") ?? "localhost",
+
+            var factory = new ConnectionFactory { HostName = _configuration["RabbitMqHostname"],
                 DispatchConsumersAsync = true,
-                UserName = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER"),
-                Password = Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")
+                UserName = _configuration["RabbitMqUsername"],
+                Password =_configuration["RabbitMqPassword"]
             };
             using var connection =await factory.CreateConnectionAsync();
             using var channel = await connection.CreateChannelAsync();

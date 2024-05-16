@@ -59,14 +59,14 @@ public class RabbitConsumerService : IRabbitConsumerService
                     var body = ea.Body.ToArray();
                     var json = Encoding.UTF8.GetString(body);
                     
-                    var parcel = JsonConvert.DeserializeObject<ParcelEntity>(json);
+                    var receive = JsonConvert.DeserializeObject<ParcelMessage>(json);
                     
-                    _logger.Information("Received Parcel \n{@parcel}",parcel);
+                    _logger.Information("Received Parcel \n{@receive}",receive);
                     
                     // validation
-                    if(parcel?.Attributes != null && parcel.Attributes.ToJson().Length > 0)
+                    if(receive?.Attributes != null && receive.Attributes.ToJson().Length > 0)
                     {
-                        var r =  await _scannerStepValidator.ValidateAsync(parcel.Attributes);
+                        var r =  await _scannerStepValidator.ValidateAsync(receive.Attributes);
                             
                         if (!r.IsValid)
                         {
@@ -78,6 +78,8 @@ public class RabbitConsumerService : IRabbitConsumerService
                             return;
                         }
                     }
+                    
+                    var parcel = JsonConvert.DeserializeObject<ParcelEntity>(json);
 
                     //creating parcel
                     var result = await _parcelService.Create(parcel);
@@ -91,14 +93,13 @@ public class RabbitConsumerService : IRabbitConsumerService
                 await channel.BasicConsumeAsync(queue: "parcels",
                     autoAck: true,
                     consumer: consumer);
-
                     
-                Task.Delay(1000).Wait();
+                Task.Delay(500).Wait();
             }
         }
         catch (Exception e)
         {
-               _logger.Error("Error connecting to rabbitmq server. Retrying in 5 seconds");
+            _logger.Error("Error connecting to rabbitmq server. Retrying in 5 seconds");
         }
     }
 

@@ -16,11 +16,11 @@ class Program
         var builder = new ConfigurationBuilder();
         BuildConfig(builder);
 
-        Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console().Enrich.FromLogContext()
-            .CreateLogger();
-
         var configuration = builder.Build();
+
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
                         
         Log.Logger.Information("Application is starting");
         while (true)
@@ -47,7 +47,7 @@ class Program
             var rabbitConsumerService = host.Services.GetRequiredService<IRabbitConsumerService>();
             
             await rabbitConsumerService.ConsumeParcel();
-            
+                
             await Task.Delay(5000);
         }
     }

@@ -5,14 +5,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["rabbit_producer/rabbit_producer.csproj", "./"]
+COPY ["rabbit_producer/rabbit_producer/rabbit_producer.csproj", "./"]
 RUN dotnet restore "rabbit_producer.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN dotnet build "rabbit_producer/rabbit_producer.csproj" -c Release -o /app/build
+RUN dotnet build "rabbit_producer/rabbit_producer/rabbit_producer.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "rabbit_producer/rabbit_producer.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "rabbit_producer/rabbit_producer/rabbit_producer.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

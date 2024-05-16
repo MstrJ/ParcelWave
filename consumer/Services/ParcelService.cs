@@ -54,7 +54,7 @@ public class ParcelService : IParcelService
             
             var parcelFromDb = await _parcelRepository.Get(existingParcel.Identifies.UPID);
 
-            if (existingParcel.Equals(parcelFromDb))
+            if (existingParcel.Equals(parcelFromDb)) // necessary? if the error is thrown the parcel wont be updated
             {
                 _logger.Information("Parcel [{@parcel}] wasn't changed",parcel.Identifies.UPID);
                 return false;

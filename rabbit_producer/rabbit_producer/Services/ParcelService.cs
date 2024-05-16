@@ -15,9 +15,9 @@ public class ParcelService : IParcelService
         _queueSender = queueSender;
     }
     
-    public async Task<bool> Parcel_Weight(ParcelWeightDTO dto)
+    public async Task<bool> SendMessage(ParcelWeightDTO dto)
     {
-        var parcel = new ParcelEnity
+        var parcel = new ParcelMessage
         {
             Identifies = new Identifies
             {
@@ -28,13 +28,12 @@ public class ParcelService : IParcelService
                 Weight = dto.Weight
             }
         };
-        
         return await _queueSender.SendToQueue(parcel);
     }
     
-    public async Task<bool> Parcel_Scanner(ParcelScannerDTO dto)
+    public async Task<bool> SendMessage(ParcelScannerDTO dto)
     {
-        var parcel = new ParcelEnity
+        var parcel = new ParcelMessage
         {
             Identifies = new Identifies
             {
@@ -47,13 +46,12 @@ public class ParcelService : IParcelService
                 Width = dto.Width
             }
         };
-        
         return await _queueSender.SendToQueue(parcel);
     }
     
-    public async Task<bool> Parcel_Facility(ParcelFacilityDTO dto)
+    public async Task<bool> SendMessage(ParcelFacilityDTO dto)
     {
-        var parcel = new ParcelEnity
+        var parcel = new ParcelMessage
         {
             Identifies = new Identifies
             {
@@ -64,7 +62,6 @@ public class ParcelService : IParcelService
                 Facility = dto.Facility
             }
         };
-            
         return await _queueSender.SendToQueue(parcel);
     }
 }
