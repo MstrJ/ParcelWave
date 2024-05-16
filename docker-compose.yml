@@ -1,10 +1,10 @@
 services:
-  rabbit_producer:
-    image: rabbit_producer
-    container_name: rabbit_producer
+  facilityworker:
+    image: facilityworker
+    container_name: facilityWorker
     build:
       context: .
-      dockerfile: ./rabbit_producer/rabbit_producer/Dockerfile
+      dockerfile: ./FacilityWorker/FacilityWorker/Dockerfile
     ports:
       - "8080:80"
     env_file:
@@ -85,6 +85,7 @@ services:
       KAFKA_LISTENERS: INSIDE://kafka:9092,OUTSIDE://:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+
   seq:
     image: datalust/seq:latest
     container_name: seq
