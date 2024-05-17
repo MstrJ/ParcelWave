@@ -1,7 +1,7 @@
 services:
   facilityworker:
     image: facilityworker
-    container_name: facilityWorker
+    container_name: FacilityWorker
     build:
       context: .
       dockerfile: ./FacilityWorker/FacilityWorker/Dockerfile
@@ -10,12 +10,12 @@ services:
     env_file:
       - .env
 
-  consumer:
-    image: consumer
-    container_name: consumer
+  parcelprocessor:
+    image: parcelprocessor
+    container_name: ParcelProcessor
     build:
       context: .
-      dockerfile: ./consumer/Dockerfile
+      dockerfile: ./ParcelProcessor/ParcelProcessor/Dockerfile
     env_file:
       - .env
 
