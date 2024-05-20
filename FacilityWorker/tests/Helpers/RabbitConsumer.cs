@@ -9,47 +9,28 @@ namespace tests.Helpers;
 
 public class RabbitConsumer
 {
-    public async static Task<ParcelMessage> Consume()
+    public static async Task<ParcelMessage?> ConsumeLatestMessageAsync()
     {
-
-        while (true)
+        var factory = new ConnectionFactory
         {
-            var parcels = new BlockingCollection<ParcelMessage>();
+            HostName = "localhost",
+            UserName = "kuba",
+            Password = "bardzotajnehaslo"
+        };
+        using var connection = await factory.CreateConnectionAsync();
+        using var channel = await connection.CreateChannelAsync();
+        await channel.QueueDeclareAsync(queue: "parcels",
+            durable: false,
+            exclusive: false,
+            autoDelete: false,
+            arguments: null);
 
-            var factory = new ConnectionFactory
-            {
-                HostName = "localhost",
-                Port = -1,
-                UserName = "kuba",
-                Password = "bardzotajnehaslo"
-            };
+        var consumer = new AsyncEventingBasicConsumer(channel);
+        
+        var result = await channel.BasicGetAsync("parcels", true);
 
-            using var connection = await factory.CreateConnectionAsync();
-            using var channel = await connection.CreateChannelAsync();
+        var message = Encoding.UTF8.GetString(result.Body.ToArray());
 
-            await channel.QueueDeclareAsync(queue: "parcels",
-                durable: false,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
-
-            var consumer = new EventingBasicConsumer(channel);
-
-            consumer.Received += (model, ea) =>
-            {
-                var body = ea.Body.ToArray();
-                var json = Encoding.UTF8.GetString(body);
-
-                var parcel = JsonConvert.DeserializeObject<ParcelMessage>(json);
-
-                parcels.Add(parcel);
-            };
-
-            await channel.BasicConsumeAsync(queue: "parcels",
-                autoAck: true,
-                consumer: consumer);
-
-            return parcels.Take();
-        }
+        return JsonConvert.DeserializeObject<ParcelMessage>(message);
     }
 }

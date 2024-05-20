@@ -1,4 +1,5 @@
-﻿using ParcelProcessor.Repositories;
+﻿using FluentValidation;
+using ParcelProcessor.Repositories;
 using ParcelProcessor.Repositories.Interfaces;
 using ParcelProcessor.Services;
 using ParcelProcessor.Validators;
@@ -8,8 +9,10 @@ using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using Serilog;
 
-class Program
+public class Program
 {
+    public static IServiceProvider ServiceProvider { get; private set; }
+    
     public static async Task Main(string[] args)
     {
 
@@ -29,10 +32,13 @@ class Program
             {
                 services.AddSingleton<IConfiguration>(configuration);
                 services.AddSingleton(Log.Logger);
+                services.AddValidatorsFromAssemblyContaining(typeof(ScannerStepValidator));
+                services.AddValidatorsFromAssemblyContaining(typeof(ScaleStepValidator));
+                services.AddValidatorsFromAssemblyContaining(typeof(ParcelMessageIdentifiesValidator));
+                services.AddValidatorsFromAssemblyContaining(typeof(FacilityStepValidator));
                 services.AddTransient<IParcelService, ParcelService>();
-                services.AddTransient<ScannerStepValidator>();
                 services.AddTransient<IKafkaProducerService, KafkaProducerService>();
-                    
+                services.AddSingleton<IValidatorService, ValidatorService>();
                 services.AddSingleton<IParcelRepository, ParcelRepository>();
                 services.AddSingleton<IRabbitConsumerService, RabbitConsumerService>();
                 services.AddSingleton<IMongoClient, MongoClient>(x =>
@@ -43,7 +49,7 @@ class Program
                 });
                     
             }).UseSerilog().Build();
-
+            ServiceProvider = host.Services;
             var rabbitConsumerService = host.Services.GetRequiredService<IRabbitConsumerService>();
             
             await rabbitConsumerService.ConsumeParcel();
@@ -52,7 +58,8 @@ class Program
         }
     }
 
-    private static void BuildConfig(IConfigurationBuilder builder)
+    
+    public static void BuildConfig(IConfigurationBuilder builder)
     {
         builder.SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)

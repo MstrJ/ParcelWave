@@ -1,27 +1,29 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
+using tests.Helpers;
 
 namespace tests;
 
-public class TestFixture<T> : IDisposable where T : class
+public class TestFixture : IDisposable
 {
-    private readonly WebApplicationFactory<T> _factory;
-    public HttpClient Client { get; }
+
+    public static MongoHelper MongoHelper { get; set; }
+    public static RabbitProducerHelper RabbitProducerHelper { get; set; }
+    public static KafkaConsumeHelper KafkaConsumeHelper { get; set; }
     
     public TestFixture()
     {
-        _factory = new WebApplicationFactory<T>();
-        Client = _factory.CreateClient();
+        Task.Run(async () => await Program.Main(Array.Empty<string>()));
+        var config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("testappsettings.json")
+            .AddEnvironmentVariables()
+            .Build();
+            
+        MongoHelper = new MongoHelper(config);
+        RabbitProducerHelper = new RabbitProducerHelper(config);
+        KafkaConsumeHelper = new KafkaConsumeHelper(config);
     }
 
-    public void Dispose()
+    public async void Dispose()
     {
-        Client.Dispose();
-        _factory.Dispose();
+        await MongoHelper.DeleteAll();
     }
-
 }
-
-// 
-
-// 1 helper, mongo get by upid parcel repo., z uzyciu repo,
-// 2 helper  kafka, consume latest

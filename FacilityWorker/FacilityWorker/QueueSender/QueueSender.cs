@@ -18,7 +18,6 @@ public class QueueSender : IQueueSender
     {
         try
         {
-
             var factory = new ConnectionFactory { HostName = _configuration["RabbitMqHostname"],
                 DispatchConsumersAsync = true,
                 UserName = _configuration["RabbitMqUsername"],

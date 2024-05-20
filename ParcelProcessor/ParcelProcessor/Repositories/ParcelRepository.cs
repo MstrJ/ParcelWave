@@ -13,10 +13,21 @@ public class ParcelRepository : IParcelRepository
     private readonly IMongoCollection<ParcelEntity> _parcelsCollection;
     private readonly IConfiguration _config;
     
+    
+    public ParcelRepository(IMongoClient mongoClient, IConfiguration config)
+    {
+        _logger = Log.Logger;
+        _config = config;
+        var database = mongoClient.GetDatabase(_config["MongoDatabaseName"]);
+        _parcelsCollection = database.GetCollection<ParcelEntity>("ParcelEntities");
+        
+        InitializeDatabase(database);
+    }
+    
     public ParcelRepository(IMongoClient mongoClient, ILogger logger, IConfiguration config)
     {
-        _config = config;
-        _logger = logger;
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         var database = mongoClient.GetDatabase(_config["MongoDatabaseName"]);
         _parcelsCollection = database.GetCollection<ParcelEntity>("ParcelEntities");
         
@@ -89,5 +100,19 @@ public class ParcelRepository : IParcelRepository
             return false;
         }
     }
-    
+
+    public async Task<bool> DeleteAll()
+    {
+        try
+        {
+            await _parcelsCollection.DeleteManyAsync(new BsonDocument());   
+            _logger.Information("All parcels are deleted");
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.Error("All parcels are not deleted");
+            return false;
+        }
+    }
 }

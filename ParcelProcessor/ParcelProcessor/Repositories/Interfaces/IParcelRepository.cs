@@ -8,4 +8,5 @@ public interface IParcelRepository
     Task<ParcelEntity> Get(string upid);
     Task<bool> Update(ParcelEntity parcel);
     Task<bool> Delete(string upid);
+    Task<bool> DeleteAll();
 }

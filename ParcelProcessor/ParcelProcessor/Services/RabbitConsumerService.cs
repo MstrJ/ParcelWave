@@ -1,10 +1,7 @@
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
 using Newtonsoft.Json;
 using ParcelProcessor.Models;
-using ParcelProcessor.Models.Interfaces;
-using ParcelProcessor.Validators;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Serilog;
@@ -15,14 +12,17 @@ public class RabbitConsumerService : IRabbitConsumerService
 {
     private readonly IParcelService _parcelService;
     private readonly IKafkaProducerService _kafkaProducerService;
-    private readonly ScannerStepValidator _scannerStepValidator;
     private readonly ILogger _logger;
     private readonly IConfiguration _config;
+    private readonly IValidatorService _validatorService;
 
-    public RabbitConsumerService(IParcelService parcelService, IKafkaProducerService kafkaProducerService, ScannerStepValidator scannerStepValidator, ILogger logger, IConfiguration config)
+    public RabbitConsumerService(IParcelService parcelService, IKafkaProducerService kafkaProducerService,IValidatorService validatorService, ILogger logger, IConfiguration config)
     {
-        (_parcelService, _kafkaProducerService, _scannerStepValidator,_logger,_config) =
-            (parcelService, kafkaProducerService, scannerStepValidator,logger,config);
+        _validatorService = validatorService;
+        _parcelService = parcelService;
+        _kafkaProducerService = kafkaProducerService;
+        _logger = logger;
+        _config = config;
     }
     
     public async Task ConsumeParcel()
@@ -62,31 +62,17 @@ public class RabbitConsumerService : IRabbitConsumerService
                     var receive = JsonConvert.DeserializeObject<ParcelMessage>(json);
                     
                     _logger.Information("Received Parcel \n{@receive}",receive);
-                    
-                    // validation
-                    if(receive?.Attributes != null && receive.Attributes.ToJson().Length > 0)
-                    {
-                        var r =  await _scannerStepValidator.ValidateAsync(receive.Attributes);
-                            
-                        if (!r.IsValid)
-                        {
-                            foreach (var failure in r.Errors)
-                            {
-                                _logger.Error("Property {@propertyName} failed validation. Error was: {@errorMessage}",failure.PropertyName,failure.ErrorMessage);
-                            }
 
-                            return;
-                        }
-                    }
+                    //validation
+                    bool validatorResult = await _validatorService.ValidateParcelMessage(receive);
                     
-                    var parcel = JsonConvert.DeserializeObject<ParcelEntity>(json);
-
+                    if (!validatorResult) return;    
+                    
                     //creating parcel
-                    var result = await _parcelService.Create(parcel);
+                    var result = await _parcelService.Create(receive);
                     
-                    
-                     //check and produce to kafka
-                    if (result) await CheckKafkaProduceParcel(parcel); //  Foo
+                    //check and produce to kafka
+                    if (result) await CheckKafkaProduceParcel(receive);
    
                 };
 
@@ -94,7 +80,7 @@ public class RabbitConsumerService : IRabbitConsumerService
                     autoAck: true,
                     consumer: consumer);
                     
-                Task.Delay(500).Wait();
+                Task.Delay(200).Wait();
             }
         }
         catch (Exception e)
@@ -104,9 +90,9 @@ public class RabbitConsumerService : IRabbitConsumerService
     }
 
 
-    private  async Task CheckKafkaProduceParcel(IParcelEntity parcelEntity)
+    private  async Task CheckKafkaProduceParcel(ParcelMessage parcelMessage)
     {
-        var parcel = await _parcelService.Get(parcelEntity.Identifies.UPID);
+        var parcel = await _parcelService.Get(parcelMessage.Identifies?.UPID);
 
         if (!parcel.IsReady()) return;
         
@@ -121,4 +107,6 @@ public class RabbitConsumerService : IRabbitConsumerService
         }
         _logger.Error("Parcel [{@parcel}] could not be produced to Kafka. 😞",parcel.Identifies.UPID);
     }
+    
+    
 }

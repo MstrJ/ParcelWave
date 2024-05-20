@@ -14,9 +14,14 @@ public class ParcelService : IParcelService
     {
         _parcelRepository = parcelRepository;
         _logger = logger;
+    }    
+    
+    public ParcelService(IParcelRepository parcelRepository)
+    {
+        _parcelRepository = parcelRepository;
     }
 
-    public async Task<bool> Create(ParcelEntity parcel)
+    public async Task<bool> Create(ParcelMessage parcel)
     {
         try
         {
@@ -53,10 +58,10 @@ public class ParcelService : IParcelService
             
             var parcelFromDb = await _parcelRepository.Get(existingParcel.Identifies.UPID);
 
-            if (existingParcel.Equals(parcelFromDb)) // necessary? if the error is thrown the parcel wont be updated
+            if (existingParcel.Equals(parcelFromDb))
             {
                 _logger.Information("Parcel [{@parcel}] wasn't changed",parcel.Identifies.UPID);
-                return false;
+                return false; // true?>false?
             }
                 
             await _parcelRepository.Update(existingParcel);

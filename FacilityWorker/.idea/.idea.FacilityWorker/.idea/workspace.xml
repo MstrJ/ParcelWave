@@ -12,87 +12,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41233e2d-f199-4d37-b863-98df5ff46708" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.idea/.idea.consumer/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.idea/.idea.consumer/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.idea/.idea.consumer/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.idea/.idea.consumer/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/.idea/.idea.consumer/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Dto/Attributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Dto/CurrentState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Dto/Facility.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Dto/Identifies.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Dto/ParcelEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/Interfaces/IParcelEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/ParcelEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/ParcelExtensions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Models/ParcelMessage.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Repositories/Interfaces/IParcelRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Repositories/ParcelRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/Interfaces/IKafkaProducerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/Interfaces/IParcelService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/Interfaces/IRabbitConsumerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/KafkaProducerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/ParcelService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Services/RabbitConsumerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/Validators/ScannerStepValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/appsettings.Development.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/appsettings.Docker.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/appsettings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/consumer.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/consumer/parcel-entity.1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/tests/TestFixture.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/tests/Usings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../consumer/tests/tests.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IValidatorService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ValidatorService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/FacilityStepValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ParcelMessageIdentifiesValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScaleStepValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelMessage.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/KafkaConsumeHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/MongoHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/RabbitProducerHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/TestKafkaConsume.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FacilityWorker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FacilityWorker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/.idea/.idea.consumer/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/.idea/.idea.consumer/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/.idea/.idea.consumer/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Dto/Attributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Dto/CurrentState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Dto/Facility.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Dto/Identifies.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Dto/ParcelEntity.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/Interfaces/IParcelEntity.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/ParcelEntity.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/ParcelExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Models/ParcelMessage.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Repositories/Interfaces/IParcelRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Repositories/ParcelRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/Interfaces/IKafkaProducerService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/Interfaces/IParcelService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/Interfaces/IRabbitConsumerService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/KafkaProducerService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/ParcelService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Services/RabbitConsumerService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/Validators/ScannerStepValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/appsettings.Docker.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/consumer.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/consumer.sln" beforeDir="false" afterPath="$PROJECT_DIR$/../consumer/consumer.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.AssemblyInfoInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.GlobalUsings.g.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.assets.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/Debug/net7.0/consumer.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/consumer.csproj.nuget.dgspec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/consumer.csproj.nuget.g.props" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/consumer.csproj.nuget.g.targets" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/project.assets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/project.nuget.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/project.packagespec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/rider.project.model.nuget.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/obj/rider.project.restore.info" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../consumer/parcel-entity.1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FacilityWorker/QueueSender/QueueSender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FacilityWorker/QueueSender/QueueSender.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Helpers/CreateexpectedParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Helpers/CreateExpectedParcelMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Helpers/RabbitConsumer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Helpers/RabbitConsumer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/ProducerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/ProducerTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/.idea/.idea.ParcelProcessor/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/ParcelProcessor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/ParcelProcessor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/Interfaces/IParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/Interfaces/IParcelRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/ParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/ParcelRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IParcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IParcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ParcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ParcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/RabbitConsumerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/RabbitConsumerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScannerStepValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScannerStepValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/TestFixture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/TestFixture.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/tests.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,6 +285,25 @@
       <workItem from="1715931710178" duration="15000" />
       <workItem from="1715932149085" duration="7000" />
       <workItem from="1715932699018" duration="7000" />
+      <workItem from="1715933112835" duration="21000" />
+      <workItem from="1715934049371" duration="9000" />
+      <workItem from="1715934522490" duration="10000" />
+      <workItem from="1715935533944" duration="10000" />
+      <workItem from="1715935597537" duration="5000" />
+      <workItem from="1715938649819" duration="8000" />
+      <workItem from="1715938668506" duration="212000" />
+      <workItem from="1715939759963" duration="23000" />
+      <workItem from="1715952020554" duration="25000" />
+      <workItem from="1715953171997" duration="75000" />
+      <workItem from="1715953941385" duration="31000" />
+      <workItem from="1716131938532" duration="26000" />
+      <workItem from="1716131977719" duration="12000" />
+      <workItem from="1716133799274" duration="36000" />
+      <workItem from="1716134500985" duration="7000" />
+      <workItem from="1716189579467" duration="3000" />
+      <workItem from="1716189589953" duration="22000" />
+      <workItem from="1716189702007" duration="5000" />
+      <workItem from="1716198127272" duration="20000" />
     </task>
     <servers />
   </component>
