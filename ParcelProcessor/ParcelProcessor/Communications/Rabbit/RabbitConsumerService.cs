@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using ParcelProcessor.Communication.Rabbit;
 using ParcelProcessor.Communications.Rabbit.Dto;
 using ParcelProcessor.Services.Interfaces;
 using RabbitMQ.Client;
@@ -10,7 +10,7 @@ using Serilog;
 
 namespace ParcelProcessor.Communications.Rabbit;
 
-public class RabbitConsumerService : IRabbitConsumerService
+public class RabbitConsumerService : BackgroundService
 {
     private readonly IParcelService _parcelService;
     private readonly ILogger _logger;
@@ -31,7 +31,6 @@ public class RabbitConsumerService : IRabbitConsumerService
         bool isConnected = false;
         while (!isConnected)
         {
-
             try
             {
                 _logger.Information("Consumer is running");
@@ -45,8 +44,8 @@ public class RabbitConsumerService : IRabbitConsumerService
                     Password = _config["RabbitMqPassword"]
                 };
 
-                using var connection = await factory.CreateConnectionAsync();
-                using var channel = await connection.CreateChannelAsync();
+                var connection = await factory.CreateConnectionAsync();
+                var channel = await connection.CreateChannelAsync();
 
                 await channel.QueueDeclareAsync(queue: "parcels",
                     durable: false,
@@ -75,7 +74,6 @@ public class RabbitConsumerService : IRabbitConsumerService
                 await channel.BasicConsumeAsync(queue: "parcels",
                     autoAck: false,
                     consumer: consumer);
-                
                 isConnected = true;
             }
             catch (Exception e)
@@ -85,5 +83,10 @@ public class RabbitConsumerService : IRabbitConsumerService
             }
             
         }
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+         await ConsumeParcel();
     }
 }

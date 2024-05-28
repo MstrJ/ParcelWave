@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using ParcelProcessor.Communication.Rabbit;
 using ParcelProcessor.Communications.Kafka;
 using ParcelProcessor.Communications.Rabbit;
 using ParcelProcessor.Repository;
@@ -40,7 +39,7 @@ public class Program
             services.AddTransient<INetworkNotifier, KafkaProducerService>();
             services.AddSingleton<IValidatorService, ValidatorService>();
             services.AddSingleton<IParcelRepository, ParcelRepository>();
-            services.AddSingleton<IRabbitConsumerService, RabbitConsumerService>();
+            services.AddHostedService<RabbitConsumerService>();
             services.AddSingleton<IMongoClient, MongoClient>(x =>
             {
                 var uri = configuration["MongoUri"];
@@ -49,10 +48,6 @@ public class Program
             });
                 
         }).UseSerilog().Build();
-        
-        var rabbitConsumerService = host.Services.GetRequiredService<IRabbitConsumerService>();
-        
-        await rabbitConsumerService.ConsumeParcel();
             
         await host.RunAsync();
     }
