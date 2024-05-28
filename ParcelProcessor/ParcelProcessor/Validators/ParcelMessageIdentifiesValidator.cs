@@ -1,9 +1,9 @@
 using FluentValidation;
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
 
 namespace ParcelProcessor.Validators;
 
-public class ParcelMessageIdentifiesValidator :  AbstractValidator<Identifies>
+public class ParcelMessageIdentifiesValidator :  AbstractValidator<ParcelMessage>
 {
     public ParcelMessageIdentifiesValidator()
     {

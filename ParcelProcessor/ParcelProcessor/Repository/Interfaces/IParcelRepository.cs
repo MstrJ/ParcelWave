@@ -1,6 +1,6 @@
-using ParcelProcessor.Models;
+using ParcelProcessor.Repository.Dto;
 
-namespace ParcelProcessor.Repositories.Interfaces;
+namespace ParcelProcessor.Repository.Interfaces;
 
 public interface IParcelRepository
 {

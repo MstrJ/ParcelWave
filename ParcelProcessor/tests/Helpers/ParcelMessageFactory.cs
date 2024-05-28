@@ -1,14 +1,15 @@
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
+using ParcelProcessor.Repository.Dto;
 
 namespace tests.Helpers;
 
-public static class CreateParcelMessage
+public static class ParcelMessageFactory
 {
     public static ParcelMessage Weight(string upid, float weight)
     {
         return new ParcelMessage
         {
-            Identifies = new Identifies { UPID = upid },
+            UPID = upid,
             Attributes = new Attributes { Weight = weight },
             CurrentState = new CurrentState()
         };
@@ -18,7 +19,7 @@ public static class CreateParcelMessage
     {
         return new ParcelMessage
         {
-            Identifies = new Identifies { UPID = upid },
+            UPID = upid,
             Attributes = new Attributes { Length = length, Depth = depth, Width = width },
             CurrentState = new CurrentState()
         };
@@ -28,7 +29,7 @@ public static class CreateParcelMessage
     {
         return new ParcelMessage
         {
-            Identifies = new Identifies { UPID = upid },
+            UPID = upid,
             CurrentState = new CurrentState { Facility = facility }
         };
     }
@@ -37,7 +38,7 @@ public static class CreateParcelMessage
     {
         return new ParcelMessage
         {
-            Identifies = new Identifies { UPID = upid },
+            UPID = upid,
             Attributes = new Attributes { Weight = weight, Length = lenght, Depth = depth, Width = width },
             CurrentState = new CurrentState { Facility = facility }
         };

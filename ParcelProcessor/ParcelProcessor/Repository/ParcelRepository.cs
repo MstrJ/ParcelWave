@@ -1,18 +1,17 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using ParcelProcessor.Models;
-using ParcelProcessor.Repositories.Interfaces;
+using ParcelProcessor.Repository.Dto;
+using ParcelProcessor.Repository.Interfaces;
 using Serilog;
 
-namespace ParcelProcessor.Repositories;
+namespace ParcelProcessor.Repository;
 
 public class ParcelRepository : IParcelRepository
 {
     private readonly ILogger _logger;
     private readonly IMongoCollection<ParcelEntity> _parcelsCollection;
     private readonly IConfiguration _config;
-    
     
     public ParcelRepository(IMongoClient mongoClient, IConfiguration config)
     {
@@ -58,14 +57,14 @@ public class ParcelRepository : IParcelRepository
         }
         catch (Exception e)
         {
-            _logger.Error("Parcel [{@parcel}] is not created",parcel.Identifies.UPID);
+            _logger.Error("Parcel [{@parcel}] is not created",parcel.Identifiers.UPID);
             return false;
         }
     }
 
     public async Task<ParcelEntity> Get(string upid)
     {
-        return await _parcelsCollection.Find(p => p.Identifies!.UPID == upid).FirstOrDefaultAsync();
+        return await _parcelsCollection.Find(p => p.Identifiers!.UPID == upid).FirstOrDefaultAsync();
     }
     
     
@@ -73,14 +72,14 @@ public class ParcelRepository : IParcelRepository
     {
         try
         {
-            await _parcelsCollection.ReplaceOneAsync(p => p.Identifies.UPID == parcel.Identifies.UPID, parcel);
+            await _parcelsCollection.ReplaceOneAsync(p => p.Identifiers.UPID == parcel.Identifiers.UPID, parcel);
             _logger.Information("Parcel is updated\n[{@parcel}]", parcel);
             return true;
 
         }
         catch (Exception e)
         {
-            _logger.Error("Parcel [{@parcel}] is not updated", parcel.Identifies.UPID);
+            _logger.Error("Parcel [{@parcel}] is not updated", parcel.Identifiers.UPID);
             return false;
         }
     }
@@ -89,7 +88,7 @@ public class ParcelRepository : IParcelRepository
     {
         try
         {
-            await _parcelsCollection.DeleteOneAsync(p => p.Identifies.UPID == upid);
+            await _parcelsCollection.DeleteOneAsync(p => p.Identifiers.UPID == upid);
             _logger.Information("Parcel [{Upid}] is deleted",upid);
             return true;
 

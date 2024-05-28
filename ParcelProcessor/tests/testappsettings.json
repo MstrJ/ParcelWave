@@ -15,5 +15,5 @@
   "KafkaHostname": "localhost:9094",
   "SchemaRegistryUrl": "http://localhost:8085",
   "RabbitMqUsername": "kuba",
-  "RabbitMqPassword": "bardzotajnehaslo",
+  "RabbitMqPassword": "bardzotajnehaslo"
 }

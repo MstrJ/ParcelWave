@@ -1,9 +1,8 @@
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
 
-namespace ParcelProcessor.Services;
+namespace ParcelProcessor.Services.Interfaces;
 
 public interface IParcelService
 {
-    Task<bool> Create(ParcelMessage parcel);
-    Task<ParcelEntity> Get(string upid);
+    Task Process(ParcelMessage receive);
 }

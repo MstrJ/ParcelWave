@@ -8,11 +8,7 @@ public abstract class CreateExpectedParcelMessage
     {
         var expectation = new ParcelMessage
         {
-            Identifies = new Identifies
-            {
-                Barcode = null,
-                UPID = upid
-            },
+            UPID = upid,
             Attributes = new Attributes
             {
                 Depth = depth,

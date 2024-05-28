@@ -1,21 +1,25 @@
-using com.kuba;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Confluent.SchemaRegistry.Serdes;
 using Microsoft.Extensions.Configuration;
-using ParcelScheme = com.kuba.ParcelEntity;
+using ParcelProcessor.Communications.Kafka.Dto;
+using ParcelProcessor.Repository.Dto;
+using Attributes = ParcelProcessor.Communications.Kafka.Dto.Attributes;
+using CurrentState = ParcelProcessor.Communications.Kafka.Dto.CurrentState;
+using Facility = ParcelProcessor.Communications.Kafka.Dto.Facility;
+using Identifiers = ParcelProcessor.Communications.Kafka.Dto.Identifiers;
 
-namespace ParcelProcessor.Communication.Kafka;
+namespace ParcelProcessor.Communications.Kafka;
 
-public class KafkaProducerService : IKafkaProducerService
+public class KafkaProducerService : INetworkNotifier
 {
     private readonly IConfiguration _config;
     public KafkaProducerService(IConfiguration config)
     {
         _config = config;
     }
-        
-    public async Task<bool> ProduceParcel(Models.ParcelEntity parcel)
+    
+    public async Task<bool> Send(ParcelEntity parcel)
     {
         var config = new ProducerConfig
         {
@@ -30,7 +34,6 @@ public class KafkaProducerService : IKafkaProducerService
         {
             BufferBytes = 100
         };
-            
         
         try
         {
@@ -42,10 +45,10 @@ public class KafkaProducerService : IKafkaProducerService
             var parcelToProduce = new ParcelScheme
             {
                 _Id = parcel._Id,
-                Identifies = new Identifies
+                Identifiers = new Identifiers
                 {
-                    UPID = parcel.Identifies.UPID,
-                    Barcode = parcel.Identifies.Barcode
+                    UPID = parcel.Identifiers.UPID,
+                    Barcode = parcel.Identifiers.Barcode
                 },
                 Attributes = new Attributes
                 {
@@ -59,9 +62,11 @@ public class KafkaProducerService : IKafkaProducerService
                     Facility = (Facility)Enum.Parse(typeof(Facility), parcel.CurrentState.Facility.ToString())
                 }
             };
-            await producer.ProduceAsync("parcels", new Message<string, com.kuba.ParcelEntity>
+            
+            
+            await producer.ProduceAsync("parcels", new Message<string,ParcelScheme>
             {
-                Key = parcelToProduce.Identifies.UPID,
+                Key = parcelToProduce.Identifiers.UPID,
                 Value = parcelToProduce,
             });
 
@@ -73,6 +78,6 @@ public class KafkaProducerService : IKafkaProducerService
         {
             return false;
         }
-        
+
     }
 }

@@ -2,15 +2,9 @@ namespace FacilityWorker.Models;
 
 public class ParcelMessage
 {
-    public Identifies? Identifies { get; set; }
+    public string UPID { get; set; }
     public Attributes? Attributes { get; set; }
     public CurrentState? CurrentState { get; set; }
-}
-
-public class Identifies
-{
-    public string UPID { get; set; }
-    public string? Barcode { get; set; }
 }
 
 public class Attributes
@@ -28,5 +22,5 @@ public class CurrentState
 
 public enum Facility
 {
-    Ord,Wdr,Dfw,Atl
+    Ord,Dfw,Atl
 }

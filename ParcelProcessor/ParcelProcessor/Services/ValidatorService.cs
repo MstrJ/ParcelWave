@@ -1,6 +1,7 @@
 using FluentValidation;
 using MongoDB.Bson;
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
+using ParcelProcessor.Services.Interfaces;
 using ParcelProcessor.Validators;
 using Serilog;
 namespace ParcelProcessor.Services;
@@ -24,7 +25,7 @@ public class ValidatorService : IValidatorService
 
     public async Task<bool> ValidateParcelMessage(ParcelMessage receive)
     {
-        if (!await ValidateAndLogErrors<Identifies>(_parcelMessageIdentifiesValidator, receive.Identifies))
+        if (!await ValidateAndLogErrors<ParcelMessage>(_parcelMessageIdentifiesValidator, receive))
             return false;
         
         if(receive?.Attributes != null && receive.Attributes.ToJson().Length > 0)
@@ -41,7 +42,7 @@ public class ValidatorService : IValidatorService
                return false;
         }
         
-        _logger.Information("Receive is valid {@receive}", receive);
+        _logger.Information("Receive is valid ");
         return true;
     }
     

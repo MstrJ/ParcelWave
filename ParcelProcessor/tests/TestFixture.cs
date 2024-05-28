@@ -5,7 +5,6 @@ namespace tests;
 
 public class TestFixture : IDisposable
 {
-
     public static MongoHelper MongoHelper { get; set; }
     public static RabbitProducerHelper RabbitProducerHelper { get; set; }
     public static KafkaConsumeHelper KafkaConsumeHelper { get; set; }

@@ -8,8 +8,8 @@ public class ParcelEntity
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string? _Id { get; set; }
-    [BsonElement("Identifies")]
-    public Identifies? Identifies { get; set; }
+    [BsonElement("Identifiers")]
+    public Identifies? Identifiers { get; set; }
     [BsonElement("Attributes")]
     public Attributes? Attributes { get; set; }
     [BsonElement("CurrentState")]

@@ -94,5 +94,13 @@ services:
     environment:
       - ACCEPT_EULA=Y
 
-        
-  
+  reportMaker:
+    image: reportmaker
+    container_name: ReportMaker
+    build:
+      context: .
+      dockerfile: ./ReportMaker/ReportMaker/Dockerfile
+    ports:
+      - "7070:80"
+    env_file:
+      - .env

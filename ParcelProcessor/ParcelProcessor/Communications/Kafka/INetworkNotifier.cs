@@ -1,6 +1,6 @@
 using ParcelProcessor.Repository.Dto;
 
-namespace ParcelProcessor.Communications;
+namespace ParcelProcessor.Communications.Kafka;
 
 public interface INetworkNotifier
 {

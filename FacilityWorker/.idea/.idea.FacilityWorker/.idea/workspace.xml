@@ -12,33 +12,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41233e2d-f199-4d37-b863-98df5ff46708" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IValidatorService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ValidatorService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/FacilityStepValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ParcelMessageIdentifiesValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScaleStepValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelMessage.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/KafkaConsumeHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/MongoHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/RabbitProducerHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/TestKafkaConsume.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/INetworkNotifier.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Rabbit/RabbitConsumerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FacilityWorker/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FacilityWorker/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FacilityWorker/QueueSender/QueueSender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FacilityWorker/QueueSender/QueueSender.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Helpers/CreateexpectedParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Helpers/CreateExpectedParcelMessage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Helpers/RabbitConsumer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Helpers/RabbitConsumer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/ProducerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/ProducerTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/.idea/.idea.ParcelProcessor/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/ParcelProcessor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/ParcelProcessor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FacilityWorker/Models/ParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FacilityWorker/Models/ParcelMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FacilityWorker/Services/ParcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FacilityWorker/Services/ParcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Helpers/CreateExpectedParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Helpers/CreateExpectedParcelMessage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Dto/Attributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/Dto/Attributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Dto/CurrentState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/Dto/CurrentState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Dto/Facility.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/Dto/Facility.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Dto/Identifies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/Dto/Identifies.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Dto/ParcelEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/Dto/ParcelEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/Interfaces/IParcelEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/ParcelEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repository/Dto/ParcelEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/ParcelExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ParcelExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Models/ParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Rabbit/Dto/ParcelMessage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/Interfaces/IParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/Interfaces/IParcelRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/ParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/ParcelRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/Interfaces/IParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repository/Interfaces/IParcelRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repositories/ParcelRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Repository/ParcelRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IKafkaProducerService.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IParcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IParcelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IRabbitConsumerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Rabbit/IRabbitConsumerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IValidatorService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/Interfaces/IValidatorService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/KafkaProducerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Communications/Kafka/KafkaProducerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ParcelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ParcelService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/RabbitConsumerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/RabbitConsumerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/RabbitConsumerService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ValidatorService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Services/ValidatorService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/FacilityStepValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/FacilityStepValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ParcelMessageIdentifiesValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ParcelMessageIdentifiesValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScaleStepValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScaleStepValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScannerStepValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/ParcelProcessor/Validators/ScannerStepValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/ParcelEntityFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/CreateParcelMessage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/ParcelMessageFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/MongoHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/MongoHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/RabbitProducerHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/Helpers/RabbitProducerHelper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/TestFixture.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/TestFixture.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/tests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/tests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/TestParcelProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/TestParcelProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ParcelProcessor/tests/testappsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ParcelProcessor/tests/testappsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,6 +314,16 @@
       <workItem from="1716189589953" duration="22000" />
       <workItem from="1716189702007" duration="5000" />
       <workItem from="1716198127272" duration="20000" />
+      <workItem from="1716211006303" duration="172000" />
+      <workItem from="1716376386915" duration="161000" />
+      <workItem from="1716378207799" duration="22000" />
+      <workItem from="1716378782546" duration="6000" />
+      <workItem from="1716379395616" duration="539000" />
+      <workItem from="1716381980428" duration="14000" />
+      <workItem from="1716455104420" duration="19000" />
+      <workItem from="1716811813967" duration="7000" />
+      <workItem from="1716811831286" duration="99000" />
+      <workItem from="1716880130944" duration="8000" />
     </task>
     <servers />
   </component>

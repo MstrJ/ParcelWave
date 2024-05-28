@@ -1,14 +1,15 @@
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
 using RabbitMQ.Client;
+using static System.String;
 
 namespace tests.Helpers;
 
 public class RabbitProducerHelper
 {
-    private ConnectionFactory _factory;
+    private readonly ConnectionFactory _factory;
 
     public RabbitProducerHelper(IConfiguration config)
     {
@@ -21,7 +22,6 @@ public class RabbitProducerHelper
     
     public async Task Send(ParcelMessage parcel)
     {
-
         using var connection =await _factory.CreateConnectionAsync();
         using var channel = await connection.CreateChannelAsync();
             
@@ -33,7 +33,7 @@ public class RabbitProducerHelper
                 
         var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(parcel));
             
-        await channel.BasicPublishAsync(exchange: String.Empty,
+        await channel.BasicPublishAsync(exchange: Empty,
             routingKey: "parcels",
             body: body);
 

@@ -19,10 +19,7 @@ public class ParcelService : IParcelService
     {
         var parcel = new ParcelMessage
         {
-            Identifies = new Identifies
-            {
-                UPID = dto.UPID
-            },
+            UPID = dto.UPID,
             Attributes = new Attributes
             {
                 Weight = dto.Weight
@@ -35,10 +32,7 @@ public class ParcelService : IParcelService
     {
         var parcel = new ParcelMessage
         {
-            Identifies = new Identifies
-            {
-                UPID = dto.UPID
-            },
+            UPID = dto.UPID,
             Attributes = new Attributes
             {
                 Length = dto.Length,
@@ -53,10 +47,7 @@ public class ParcelService : IParcelService
     {
         var parcel = new ParcelMessage
         {
-            Identifies = new Identifies
-            {
-                UPID = dto.UPID
-            },
+            UPID = dto.UPID,
             CurrentState = new CurrentState
             {
                 Facility = dto.Facility

@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
-using ParcelProcessor.Models;
-using ParcelProcessor.Repositories;
-using ParcelProcessor.Repositories.Interfaces;
+using ParcelProcessor.Repository;
+using ParcelProcessor.Repository.Dto;
+using ParcelProcessor.Repository.Interfaces;
 
 namespace tests.Helpers;
 
@@ -29,16 +29,14 @@ public class MongoHelper
 
     public async Task WaitForMongoParcelAndVerify(string upid, Action<ParcelEntity> verifyParcelAction)
     {
-        ParcelEntity actual;
+        ParcelEntity actual = null;
         for (var i = 0; i < 10; i++)
         {
             actual = await Get(upid);
-            if (actual != null)
-            {
-                verifyParcelAction(actual);
-            }
             
+            if (actual != null) break;
             await Task.Delay(200);
         }
+        if (actual != null) verifyParcelAction(actual);
     }
 }

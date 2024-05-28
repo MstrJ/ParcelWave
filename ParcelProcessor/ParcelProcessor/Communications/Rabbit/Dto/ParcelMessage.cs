@@ -1,4 +1,6 @@
-namespace ParcelProcessor.Models;
+using ParcelProcessor.Repository.Dto;
+
+namespace ParcelProcessor.Communications.Rabbit.Dto;
 
 public class ParcelMessage
 {

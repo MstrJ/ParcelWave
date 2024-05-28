@@ -1,6 +1,6 @@
-using ParcelProcessor.Models;
+using ParcelProcessor.Communications.Rabbit.Dto;
 
-namespace ParcelProcessor.Services;
+namespace ParcelProcessor.Services.Interfaces;
 
 public interface IValidatorService
 {

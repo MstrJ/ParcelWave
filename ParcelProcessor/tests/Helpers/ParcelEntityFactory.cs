@@ -1,17 +1,15 @@
-using ParcelProcessor.Models;
+using ParcelProcessor.Repository.Dto;
 
 namespace tests.Helpers;
 
 public static class ParcelEntityFactory
 {
-    
-    
     public static ParcelEntity Weight(string upid, float weight, string? id = null, string? barcode = null)
     {
         return new ParcelEntity
         {
             _Id = id,
-            Identifies = new Identifies
+            Identifiers = new Identifiers
             {
                 UPID = upid,
                 Barcode = barcode
@@ -29,7 +27,7 @@ public static class ParcelEntityFactory
         return new ParcelEntity
         {
             _Id = id,
-            Identifies = new Identifies
+            Identifiers = new Identifiers
             {
                 UPID = upid,
                 Barcode = barcode
@@ -46,7 +44,7 @@ public static class ParcelEntityFactory
         return new ParcelEntity
         {
             _Id = id,
-            Identifies = new Identifies
+            Identifiers = new Identifiers
             {
                 UPID = upid,
                 Barcode = barcode
@@ -66,7 +64,7 @@ public static class ParcelEntityFactory
         return new ParcelEntity
         {
             _Id = id,
-            Identifies = new Identifies
+            Identifiers = new Identifiers
             {
                 UPID = upid,
                 Barcode = barcode
