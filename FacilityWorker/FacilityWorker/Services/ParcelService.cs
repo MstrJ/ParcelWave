@@ -1,13 +1,12 @@
-using FacilityWorker.Models;
-using FacilityWorker.Models.Dto;
+using FacilityWorker.QueueSender.Dto;
 using FacilityWorker.QueueSender.Interfaces;
+using FacilityWorker.Services.Dto;
 using FacilityWorker.Services.Interfaces;
 
 namespace FacilityWorker.Services;
 
 public class ParcelService : IParcelService
 {
-    
     private readonly IQueueSender _queueSender;
 
     public ParcelService(IQueueSender queueSender)

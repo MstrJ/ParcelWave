@@ -1,4 +1,4 @@
-namespace FacilityWorker.Models;
+namespace FacilityWorker.QueueSender.Dto;
 
 public class ParcelMessage
 {

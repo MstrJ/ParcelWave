@@ -10,14 +10,14 @@ using Serilog;
 
 namespace ParcelProcessor.Communications.Rabbit;
 
-public class RabbitConsumerService : BackgroundService
+public class RabbitConsumer : BackgroundService
 {
     private readonly IParcelService _parcelService;
     private readonly ILogger _logger;
     private readonly IConfiguration _config;
     private readonly IValidatorService _validatorService;
 
-    public RabbitConsumerService(IParcelService parcelService, IValidatorService validatorService, ILogger logger,
+    public RabbitConsumer(IParcelService parcelService, IValidatorService validatorService, ILogger logger,
         IConfiguration config)
     {
         _validatorService = validatorService;

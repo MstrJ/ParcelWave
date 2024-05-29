@@ -1,4 +1,5 @@
 using FacilityWorker.Models;
+using FacilityWorker.QueueSender.Dto;
 
 namespace tests.Helpers;
 

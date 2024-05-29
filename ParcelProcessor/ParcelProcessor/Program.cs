@@ -36,10 +36,10 @@ public class Program
             services.AddValidatorsFromAssemblyContaining(typeof(ParcelMessageIdentifiesValidator));
             services.AddValidatorsFromAssemblyContaining(typeof(FacilityStepValidator));
             services.AddTransient<IParcelService, ParcelService>();
-            services.AddTransient<INetworkNotifier, KafkaProducerService>();
+            services.AddTransient<INetworkNotifier, KafkaProducer>();
             services.AddSingleton<IValidatorService, ValidatorService>();
             services.AddSingleton<IParcelRepository, ParcelRepository>();
-            services.AddHostedService<RabbitConsumerService>();
+            services.AddHostedService<RabbitConsumer>();
             services.AddSingleton<IMongoClient, MongoClient>(x =>
             {
                 var uri = configuration["MongoUri"];

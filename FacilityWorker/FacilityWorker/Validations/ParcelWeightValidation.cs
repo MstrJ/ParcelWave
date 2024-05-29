@@ -1,5 +1,5 @@
+using FacilityWorker.Services.Dto;
 using FluentValidation;
-using FacilityWorker.Models.Dto;
 
 namespace FacilityWorker.Validations;
 

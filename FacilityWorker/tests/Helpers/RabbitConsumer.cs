@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Text;
 using Newtonsoft.Json;
 using FacilityWorker.Models;
+using FacilityWorker.QueueSender.Dto;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 

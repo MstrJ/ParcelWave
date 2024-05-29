@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using FacilityWorker.Models.Dto;
+using FacilityWorker.Services.Dto;
 using FacilityWorker.Services.Interfaces;
 using FacilityWorker.Validations;
 

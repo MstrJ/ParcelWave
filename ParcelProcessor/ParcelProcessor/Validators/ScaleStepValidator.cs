@@ -1,5 +1,5 @@
 using FluentValidation;
-using ParcelProcessor.Repository.Dto;
+using ParcelProcessor.Models;
 
 namespace ParcelProcessor.Validators;
 

@@ -1,6 +1,6 @@
 namespace ParcelProcessor.Communication.Rabbit;
 
-public interface IRabbitConsumerService
+public interface IRabbitConsumer
 {
     Task ConsumeParcel();
 }

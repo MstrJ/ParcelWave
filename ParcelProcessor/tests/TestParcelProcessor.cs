@@ -1,5 +1,5 @@
 using FluentAssertions;
-using ParcelProcessor.Repository.Dto;
+using ParcelProcessor.Models;
 using tests.Helpers;
 
 namespace tests;

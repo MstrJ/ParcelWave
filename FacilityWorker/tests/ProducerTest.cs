@@ -1,5 +1,5 @@
 using FluentAssertions;
-using FacilityWorker.Models.Dto;
+using FacilityWorker.Services.Dto;
 using tests.Helpers;
 
 namespace tests;

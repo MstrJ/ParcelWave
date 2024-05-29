@@ -2,9 +2,9 @@ using FluentValidation;
 using MongoDB.Bson;
 using ParcelProcessor.Communications.Rabbit.Dto;
 using ParcelProcessor.Services.Interfaces;
-using ParcelProcessor.Validators;
 using Serilog;
-namespace ParcelProcessor.Services;
+
+namespace ParcelProcessor.Validators;
 
 public class ValidatorService : IValidatorService
 {

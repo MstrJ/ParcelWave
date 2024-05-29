@@ -1,4 +1,4 @@
-using FacilityWorker.Models;
+using FacilityWorker.QueueSender.Dto;
 
 namespace FacilityWorker.QueueSender.Interfaces;
 

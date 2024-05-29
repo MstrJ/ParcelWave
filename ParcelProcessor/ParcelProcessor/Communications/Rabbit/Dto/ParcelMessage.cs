@@ -1,10 +1,7 @@
-using ParcelProcessor.Repository.Dto;
-
+using ParcelProcessor.Models;
 namespace ParcelProcessor.Communications.Rabbit.Dto;
 
-public class ParcelMessage
+public class ParcelMessage : ParcelBaseModel
 {
     public string UPID { get; set; }
-    public Attributes? Attributes { get; set; }
-    public CurrentState? CurrentState { get; set; }
 }

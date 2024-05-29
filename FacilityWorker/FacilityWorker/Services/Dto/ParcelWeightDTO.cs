@@ -1,4 +1,4 @@
-namespace FacilityWorker.Models.Dto;
+namespace FacilityWorker.Services.Dto;
 
 public class ParcelWeightDTO
 {

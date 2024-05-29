@@ -1,3 +1,4 @@
+using ParcelProcessor.Models;
 using ParcelProcessor.Repository.Dto;
 
 namespace tests.Helpers;

@@ -11,10 +11,10 @@ using Identifiers = ParcelProcessor.Communications.Kafka.Dto.Identifiers;
 
 namespace ParcelProcessor.Communications.Kafka;
 
-public class KafkaProducerService : INetworkNotifier
+public class KafkaProducer : INetworkNotifier
 {
     private readonly IConfiguration _config;
-    public KafkaProducerService(IConfiguration config)
+    public KafkaProducer(IConfiguration config)
     {
         _config = config;
     }

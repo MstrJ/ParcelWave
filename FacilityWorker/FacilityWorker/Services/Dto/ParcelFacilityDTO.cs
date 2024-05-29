@@ -1,4 +1,6 @@
-namespace FacilityWorker.Models.Dto;
+using FacilityWorker.QueueSender.Dto;
+
+namespace FacilityWorker.Services.Dto;
 
 public class ParcelFacilityDTO
 {

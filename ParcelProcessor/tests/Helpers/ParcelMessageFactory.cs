@@ -1,5 +1,5 @@
 using ParcelProcessor.Communications.Rabbit.Dto;
-using ParcelProcessor.Repository.Dto;
+using ParcelProcessor.Models;
 
 namespace tests.Helpers;
 

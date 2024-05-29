@@ -1,4 +1,4 @@
-using FacilityWorker.Models.Dto;
+using FacilityWorker.Services.Dto;
 
 namespace FacilityWorker.Services.Interfaces;
 

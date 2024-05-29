@@ -1,6 +1,5 @@
 using FluentValidation;
-using FacilityWorker.Models.Dto;
-
+using FacilityWorker.Services.Dto;
 namespace FacilityWorker.Validations;
 
 public class ParcelScannerValidation : AbstractValidator<ParcelScannerDTO>

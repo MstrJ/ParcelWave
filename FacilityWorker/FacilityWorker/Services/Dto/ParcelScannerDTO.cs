@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using FluentValidation.Attributes;
-namespace FacilityWorker.Models.Dto;
+namespace FacilityWorker.Services.Dto;
 
 public class ParcelScannerDTO
 {
